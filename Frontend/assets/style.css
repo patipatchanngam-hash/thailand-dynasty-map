@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap');
+
+:root {
+    --primary: #1e4f8a;
+    --primary-dark: #163b68;
+    --accent: #d4a017;
+    --bg: #f3f4f7;
+    --card: #ffffff;
+    --text: #2b2f36;
+    --muted: #6b7280;
+    --radius: 10px;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Sarabun', 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+}
+
+header.site {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    box-shadow: var(--shadow);
+    position: relative;
+    z-index: 1100;
+}
+
+header.site h1 {
+    margin: 0;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+header.site h1::before { content: "👑"; }
+
+header.site nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+header.site nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    transition: background-color 0.2s ease;
+}
+
+header.site nav a:hover { background: rgba(255, 255, 255, 0.15); }
+header.site nav a.active { background: var(--accent); color: #1b1b1b; font-weight: 600; }
+
+.card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 8px 18px;
+    font: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn:hover { background: var(--primary-dark); }
+.btn.secondary { background: #e5e7eb; color: var(--text); }
+.btn.secondary:hover { background: #d1d5db; }
+
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%);
+    background: #1f2937;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 999px;
+    box-shadow: var(--shadow);
+    z-index: 5000;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+}
+
+.toast.show { opacity: 1; }
+
+@media (max-width: 640px) {
+    header.site { justify-content: center; }
+    header.site h1 { font-size: 18px; }
+}

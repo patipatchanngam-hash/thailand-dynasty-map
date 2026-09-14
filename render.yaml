@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: thailand-dynasty-map
+    runtime: docker
+    plan: free
+    region: singapore
+    envVars:
+      # Neon connection string, e.g. postgresql://user:pass@ep-xxx.ap-southeast-1.aws.neon.tech/neondb?sslmode=require
+      - key: DATABASE_URL
+        sync: false
