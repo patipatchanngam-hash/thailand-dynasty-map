@@ -194,6 +194,16 @@ if (!isset(KINGDOMS[$initialTable])) {
             OrgChart.templates.searchedmale = node('#FFE58A', '#FF0000', 5, true);
             OrgChart.templates.searchedfemale = node('#FFE58A', '#FF0000', 5, true);
 
+            // Nodes hidden by the filter panel render as a small grey dot.
+            // OrgChart adds the 'filter' tag to them, but only swaps the template
+            // when tags.filter points at one — without it the filter does nothing.
+            OrgChart.templates.filtered = Object.assign({}, OrgChart.templates.ana);
+            OrgChart.templates.filtered.size = [40, 40];
+            OrgChart.templates.filtered.node = `<circle cx="20" cy="20" r="13" fill="#f3f4f6" stroke="#c7ccd3" stroke-width="2"></circle>`;
+            OrgChart.templates.filtered.field_0 = '';
+            OrgChart.templates.filtered.field_1 = '';
+            OrgChart.templates.filtered.img_0 = '';
+
             // ---- Data helpers ----
             function yearText(be) {
                 if (be === null || be === undefined) return 'ไม่ปรากฏ';
@@ -265,6 +275,7 @@ if (!isset(KINGDOMS[$initialTable])) {
                     toolbar: { layout: false, zoom: true, fit: true, expandAll: false },
                     nodeBinding: { field_0: 'ชื่อ', field_1: 'ตำแหน่ง', img_0: 'รูปภาพ' },
                     tags: {
+                        filter: { template: 'filtered' },
                         male: { template: 'male' },
                         female: { template: 'female' },
                         kingmale: { template: 'kingmale' },
@@ -293,6 +304,7 @@ if (!isset(KINGDOMS[$initialTable])) {
                     }
                 });
 
+                let filterItemSeq = 0;
                 chart.filterUI.on('add-item', function (sender, args) {
                     let count = 0, totalCount = 0;
                     sender.instance.config.nodes.forEach(data => {
@@ -306,9 +318,12 @@ if (!isset(KINGDOMS[$initialTable])) {
                         count = totalCount;
                         dataAllAttr = 'data-all';
                     }
+                    // The id must be a valid HTML id: values such as dynasty names contain
+                    // spaces, which would break <label for> and make the item unclickable.
+                    const itemId = `filter-item-${++filterItemSeq}`;
                     args.html = `<div class="filter-item">
-                        <input ${dataAllAttr} type="checkbox" id="${esc(args.value)}" name="${esc(args.value)}" ${args.checked ? 'checked' : ''}>
-                        <label for="${esc(args.value)}">${esc(args.text)} (${count})</label>
+                        <input ${dataAllAttr} type="checkbox" id="${itemId}" name="${esc(args.value)}" ${args.checked ? 'checked' : ''}>
+                        <label for="${itemId}">${esc(args.text)} (${count})</label>
                     </div>`;
                 });
 
