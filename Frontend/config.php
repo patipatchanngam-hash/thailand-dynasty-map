@@ -43,6 +43,14 @@ const KINGDOMS = [
     'ratanakosin' => ['name' => 'กรุงรัตนโกสินทร์',       'color' => '#48C9B0'],
 ];
 
+// PDO messages carry the database host, IP, user and database name, so they must
+// never reach the browser. Log the real reason and hand back something generic.
+function db_error(PDOException $ex, string $context): string
+{
+    error_log("[$context] " . $ex->getMessage());
+    return 'เชื่อมต่อฐานข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง';
+}
+
 function e($value): string
 {
     return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');

@@ -1,4 +1,7 @@
+# Only Frontend/ is copied into the image; keep the rest out of the build context.
 .git
+.gitignore
 Database
 docker-compose.yml
+render.yaml
 README.md

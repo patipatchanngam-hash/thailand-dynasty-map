@@ -18,7 +18,7 @@ try {
         }
     }
 } catch (PDOException $ex) {
-    $error = 'เชื่อมต่อฐานข้อมูลไม่สำเร็จ: ' . $ex->getMessage();
+    $error = db_error($ex, 'time');
 }
 ?>
 <!DOCTYPE html>
